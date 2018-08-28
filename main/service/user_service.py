@@ -1,7 +1,29 @@
 import uuid
 import datetime 
+from .. import db
+from main.model.user import User
 
-from fiucha.main.model.user import User
+def generate_token(user):
+
+	try:
+		# generate the auth token
+		auth_token = user.encode_auth_token(user.id)
+
+		response_object = {
+			"status": "succes",
+			"message": "Successfully registered.",
+			"Authorization": user.decode_auth_token(auth_token)
+		}
+
+		return response_object, 201
+	
+	except Exception as e:
+		response_object = {
+			"status": "fail",
+			"message": "Some error occurred. Please try again."
+		}
+
+		return response_object, 401
 
 # this function should only be accessed by a logged in user
 def save_new_user(data):
@@ -10,7 +32,7 @@ def save_new_user(data):
 	if not user:
 		new_user = User(
 			public_id=str(uuid.uuid4()),
-			email=data['email']
+			email=data['email'],
 			first_name=data['first_name'],
 			last_name=data['last_name'],
 			password=data['password'],
@@ -18,12 +40,7 @@ def save_new_user(data):
 			)
 
 		save_changes(new_user)
-		response_object = {
-			'status': 'success',
-			'message': 'Succesfully registered'
-		}
-
-		return response_object, 201
+		return generate_token(new_user)
 	else:
 
 		response_object = {
@@ -44,3 +61,5 @@ def get_all_users():
 def save_changes(data):
 	db.session.add(data)
 	db.session.commit()
+
+

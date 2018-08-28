@@ -1,5 +1,6 @@
 from .. import db
 from sqlalchemy.orm import validates
+import datetime
 
 class Customer(db.Model):
 	""" Table for customer records """
@@ -11,7 +12,9 @@ class Customer(db.Model):
 	last_name = db.Column(db.String(20), nullable=False)
 	phone_number = db.Column(db.String(10), nullable=False)
 	email = db.Column(db.String(20), nullable=True)
-	item_key = db.Column(db.Integer, nullable=False)
+	items = db.Column(db.PickleType, nullable=False)
+	last_date_of_sale = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+
 
 	@validates('email')
 	def validate_email(self, key, address):

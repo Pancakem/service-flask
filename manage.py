@@ -2,10 +2,11 @@ import os
 import unittest
 
 from flask_migrate import Migrate, MigrateCommand
-from flask_script IMPORT Manager
+from flask_script import Manager
 
-from fiucha.main import create_app, db
-from fiucha.main.model import blacklist
+from main import create_app, db
+from main.model import blacklist, spares, bike, customer
+from __init__ import blueprint
 
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
 app.register_blueprint(blueprint)
@@ -34,5 +35,5 @@ def test():
 	return 1
 
 
-if __name___ == '__main__':
+if __name__ == '__main__':
 	manager.run()
