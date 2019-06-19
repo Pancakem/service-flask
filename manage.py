@@ -27,7 +27,7 @@ def run():
 def test():
 	""" Runs the unit tests """
 
-	tests = unittest.TestLoader().discover('app/test', pattern='test*.py')
+	tests = unittest.TestLoader().discover('tests', pattern='test*.py')
 	result = unittest.TextTestRunner(verbosity=2).run(tests)
 
 	if result.wasSuccessful():
