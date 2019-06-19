@@ -5,7 +5,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from main import create_app, db
-from main.model import blacklist, spares, bike, customer
+from main.model import blacklist
 from __init__ import blueprint
 
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
