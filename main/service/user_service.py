@@ -36,7 +36,8 @@ def save_new_user(data):
 			first_name=data['first_name'],
 			last_name=data['last_name'],
 			password=data['password'],
-			date_registered=datetime.datetime.utcnow()
+			date_registered=datetime.datetime.utcnow(),
+			is_admin = data['is_admin']
 			)
 
 		save_changes(new_user)
@@ -53,8 +54,8 @@ def save_new_user(data):
 def get_a_user(public_id):
 	return User.query.filter_by(public_id=public_id).first()
 
-
-def get_all_users():
+# only an admin or super admin can view all users
+def get_all_users(admin_token):
 	return User.query.all()
 
 
