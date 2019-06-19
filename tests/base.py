@@ -1,5 +1,5 @@
 from flask_testing import TestCase
-from fiucha.main import db
+from main import db
 from manage import app
 
 
@@ -7,7 +7,7 @@ class BaseTestCase(TestCase):
     """ Base Tests """
 
     def create_app(self):
-        app.config.from_object("fiucha.main.config.TestingConfig")
+        app.config.from_object("main.config.TestingConfig")
         return app
 
     def setUp(self):
