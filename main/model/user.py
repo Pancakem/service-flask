@@ -17,6 +17,7 @@ class User(db.Model):
     last_name = db.Column(db.String(20))
     password_hash = db.Column(db.String(100))
     date_registered = db.Column(db.DateTime, nullable=False)
+    is_admin = db.Column(db.Integer, default=0)
 
     @property
     def password(self):
