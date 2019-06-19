@@ -1,10 +1,8 @@
 import unittest
 import datetime
-
-
-from fiucha.main.import db
-from fiucha.main.model.user import User
-from fiucha.test.base import BaseTestCase
+from main import db
+from main.model.user import User
+from base import BaseTestCase
 
 class TestUserModel(BaseTestCase):
 
@@ -13,7 +11,7 @@ class TestUserModel(BaseTestCase):
             first_name = "John",
             last_name = "Doe",
             password = "test", 
-            registered_on = datetime.datetime.utcnow()
+            date_registered = datetime.datetime.utcnow()
         )
 
         db.session.add(user)
@@ -27,7 +25,7 @@ class TestUserModel(BaseTestCase):
             first_name = "John",
             last_name = "Doe",
             password = "test", 
-            registered_on = datetime.datetime.utcnow()
+            date_registered = datetime.datetime.utcnow()
         )
         
         db.session.add(user)
