@@ -1,7 +1,6 @@
 __pycache__/
 .idea/
 venv/
-migrations/
 .vscode/
 bin/
 include/
