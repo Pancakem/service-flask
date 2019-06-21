@@ -4,13 +4,13 @@ from .. import db
 from main.model.records import Record
 
 
-def create_record(data):
+def create_record(data, user_id):
     record = Record(
         id = str(uuid.uuid4()),
         title = data['title'],
         body = data['body'],
         date_created = datetime.datetime.utcnow(),
-        user_id = data['user_id']
+        user_id = user_id
     )
     save_changes(record)
     return {
@@ -48,7 +48,7 @@ def update_record(data):
     record = Record.query.filter_by(title=data['title']).first_or_404()
     record.body = data['body']
     record.date_created = datetime.datetime.utcnow()
-    
+
     db.session.update(record)
     db.session.commit()
     return {
