@@ -15,7 +15,7 @@ class UserList(Resource):
 	@api.marshal_list_with(_user, envelope='data')
 	def get(self):
 		"""List all registered users"""
-		return admin_token_required(get_all_users())
+		return get_all_users()
 		
 
 	@api.response(201, 'User successfully created.')
@@ -55,7 +55,6 @@ class User(Resource):
 			return user
 	
 	@api.doc('delete a user')
-	@api.marshal_with(_user)
 	def delete(self, public_id):
 		""" delete a user given the id """
 		return delete_user_by_id(public_id)
