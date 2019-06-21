@@ -1,5 +1,4 @@
-web: gunicorn service-flask:app
+web: gunicorn manage:app
 
 release: python manage.py db upgrade
 
-release: python manage.py run
