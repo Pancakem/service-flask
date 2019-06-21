@@ -25,7 +25,7 @@ class RecordDto:
 	record = api.model(
 		'record', {
 			'name': fields.String(required=True, description='The record name'),
-			'first_part': fields.String(required=True, description='Record body')
+			'first_part': fields.String(required=True, description='Record body'),
 			'second_part': fields.String(description='Optional record info')
 		}
 	)
