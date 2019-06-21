@@ -1,7 +1,6 @@
 import datetime
 import uuid
 from .. import db
-from user_service import save_changes
 from main.model.records import Record
 
 
@@ -31,11 +30,11 @@ def get_all_records(user_id):
     
     return records
 
-def get_record(data):
-    return Record.query.filter_by(name=data['name']).first_or_404(description='No such data')
+def get_record(name):
+    return Record.query.filter_by(name=name).first_or_404(description='No such data')
     
-def delete_record(data):
-    record = Record.query.filter_by(name=data['name'])
+def delete_record(name):
+    record = Record.query.filter_by(name=name)
     
     if record:
         db.session.delete(record)
@@ -47,3 +46,8 @@ def update_record(data):
     record.second_part = data['second']
     record.date_created = datetime.datetime.utcnow()
     save_changes(record)
+
+
+def save_changes(data):
+    db.session.add(data)
+    db.session.commit()
