@@ -7,8 +7,8 @@ from main.model.records import Record
 def create_record(data):
     record = Record(
         id = str(uuid.uuid4()),
-        first_part = data['first'],
-        second_part = data['second'],
+        title = data['title'],
+        body = data['body'],
         date_created = datetime.datetime.utcnow(),
         user_id = data['user_id']
     )
@@ -30,20 +30,19 @@ def get_all_records(user_id):
     
     return records
 
-def get_record(name):
-    return Record.query.filter_by(name=name).first_or_404(description='No such data')
+def get_record(title):
+    return Record.query.filter_by(title=title).first_or_404(description='No such data')
     
-def delete_record(name):
-    record = Record.query.filter_by(name=name)
+def delete_record(title):
+    record = Record.query.filter_by(title=title)
     
     if record:
         db.session.delete(record)
         db.session.commit()
 
 def update_record(data):
-    record = Record.query.filter_by(name=data['name'])
-    record.first_part = data['first']
-    record.second_part = data['second']
+    record = Record.query.filter_by(title=data['title'])
+    record.body = data['body']
     record.date_created = datetime.datetime.utcnow()
     save_changes(record)
 
