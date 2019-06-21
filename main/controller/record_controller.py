@@ -21,25 +21,27 @@ class RecordList(Resource):
         return get_all_records(data['user_id'])
 
     @api.doc('creates a record')
+    @api.expect(_record, validate=True)
     def post(self):
         data = request.json
 
         return create_record(data)
     
     @api.doc('update a record')
+    @api.expect(_record, validate=True)
     def update(self):
         data = request.json
         return update_record(data)
 
-@api.route('/<name>')
+@api.route('/<title>')
 class Record(Resource):
 
     @api.doc('get a user record')  
-    def get(self, name):
-        return get_record(name)
+    def get(self, title):
+        return get_record(title)
 
     @api.doc('delete a user record')
-    def delete(self, name):
-        return delete_record(name)
+    def delete(self, title):
+        return delete_record(title)
     
     
