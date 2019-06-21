@@ -7,7 +7,7 @@ def generate_token(user):
 
 	try:
 		# generate the auth token
-		auth_token = user.encode_auth_token(user.id)
+		auth_token = user.encode_auth_token()
 
 		response_object = {
 			"status": "succes",
