@@ -3,6 +3,7 @@ from flask_restplus import Resource
 
 from ..util.dto import RecordDto
 from ..service.record_service import *
+from ..service.auth_helper import Auth
 
 
 api = RecordDto.api
@@ -17,11 +18,13 @@ class RecordList(Resource):
 
     @api.doc('get all records belonging to a user')
     @api.marshal_list_with(_record, envelope='data')
-    @api.expect(user_id_)
-    def put(self):
+    def get(self):
+        data, status = Auth.get_logged_in_user(request)
+        token = ''
+        if status == 200:
+            token = data['data']['user_id']
 
-        data = request.json
-        return get_all_records(data['user_id'])
+        return get_all_records(token)
 
     @api.doc('creates a record')
     @api.expect(_record, validate=True)
