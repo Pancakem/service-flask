@@ -3,7 +3,7 @@ from flask_restplus import Resource
 
 from ..util.dto import UserDto
 from ..service.user_service import create_user, get_all_users, get_a_user, delete_user_by_id, update_user
-from ..service.auth_helper import Auth
+from ..util.decorator import admin_token_required, token_required
 
 api = UserDto.api 
 
@@ -15,13 +15,8 @@ class UserList(Resource):
 	@api.marshal_list_with(_user, envelope='data')
 	def get(self):
 		"""List all registered users"""
-		if Auth.user_is_admin(request.json):
-			return get_all_users()
-		return {
-			'status': 'fail',
-			'message': 'user not admin'
-		}, 404
-
+		return admin_token_required(get_all_users())
+		
 
 	@api.response(201, 'User successfully created.')
 	@api.doc('create new user')
