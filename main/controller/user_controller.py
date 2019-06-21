@@ -1,5 +1,5 @@
 from flask import request
-from flask_restplus import Resource
+from flask_restplus import Resource, Namespace, fields
 
 from ..util.dto import UserDto
 from ..service.user_service import create_user, get_all_users, get_a_user, delete_user_by_id, update_user
@@ -9,10 +9,13 @@ api = UserDto.api
 
 _user = UserDto.user 
 
+user_ = UserDto.outuser
+
+
 @api.route('/')
 class UserList(Resource):
 	@api.doc('list_of_registered_users')
-	@api.marshal_list_with(_user, envelope='data')
+	@api.marshal_list_with(user_, envelope='data')
 	def get(self):
 		"""List all registered users"""
 		return get_all_users()
