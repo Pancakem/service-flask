@@ -39,4 +39,4 @@ def admin_token_required(f):
 
         return f(*args, **kwargs)
 
-return decorated
+    return decorated
