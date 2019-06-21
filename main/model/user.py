@@ -10,14 +10,14 @@ class User(db.Model):
     """ User Model for storing user related information"""
     __tablename__ = 'user'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(20), unique=True)
-    public_id = db.Column(db.String(50), unique=True, nullable=True)
+    public_id = db.Column(db.String(50), unique=True, primary_key=True)
     first_name = db.Column(db.String(20))
     last_name = db.Column(db.String(20))
     password_hash = db.Column(db.String(100))
     date_registered = db.Column(db.DateTime, nullable=False)
     is_admin = db.Column(db.Integer, default=0)
+    records = db.relationship('Record', backref='user', lazy=True)
 
     @property
     def password(self):
