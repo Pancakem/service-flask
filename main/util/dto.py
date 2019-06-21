@@ -24,8 +24,7 @@ class RecordDto:
 	api = Namespace('record', description='record related operations')
 	record = api.model(
 		'record', {
-			'name': fields.String(required=True, description='The record name'),
-			'first_part': fields.String(required=True, description='Record body'),
-			'second_part': fields.String(description='Optional record info')
+			'title': fields.String(required=True, description='The record name'),
+			'body': fields.String(required=True, description='Record body')
 		}
 	)
