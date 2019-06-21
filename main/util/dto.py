@@ -17,7 +17,7 @@ class UserDto:
 		'last_name': fields.String(required=True, description='user last name'),
 		'is_admin': fields.Integer(required=True, description='user priviledge')
 		})
-
+	
 
 class AuthDto:
 	api = Namespace('auth', description='authentication related operations')
@@ -34,4 +34,7 @@ class RecordDto:
 			'title': fields.String(required=True, description='The record name'),
 			'body': fields.String(required=True, description='Record body')
 		}
+	)
+	user_id = api.model(
+		'user_id', { 'user_id': fields.String() }
 	)
