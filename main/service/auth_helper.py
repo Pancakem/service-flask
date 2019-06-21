@@ -72,16 +72,17 @@ class Auth:
             if isinstance(resp, str):
                 user = User.query.filter_by(public_id=resp).first()
 
-                response_object = {
+                if user:
+                    response_object = {
                     "status": "success",
                     "data":{
                         "user_id": resp, 
                         "email": user.email,
                         "admin": user.is_admin,
                         "registered_on": str(user.date_registered)
+                        }
                     }
-                }
-                return response_object, 200
+                    return response_object, 200
             
             response_object = {
                 "status": "fail",
