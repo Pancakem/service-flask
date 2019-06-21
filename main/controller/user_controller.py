@@ -46,7 +46,7 @@ class UserList(Resource):
 class User(Resource):
 
 	@api.doc('get a user')
-	@api.marshal_with(_user)
+	@api.marshal_with(user_)
 	def get(self, public_id):
 		""" get a user given its identifier """
 
