@@ -26,8 +26,10 @@ class RecordList(Resource):
 
         return create_record(data)
     
+    @api.doc('update a record')
     def update(self):
-        pass
+        data = request.json
+        return update_record(data)
 
 @api.route('/<name>')
 class Record(Resource):
@@ -36,6 +38,7 @@ class Record(Resource):
     def get(self, name):
         return get_record(name)
 
+    @api.doc('delete a user record')
     def delete(self, name):
         return delete_record(name)
     
