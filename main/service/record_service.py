@@ -48,6 +48,7 @@ def update_record(data):
     record = Record.query.filter_by(title=data['title']).first_or_404()
     record.body = data['body']
     record.date_created = datetime.datetime.utcnow()
+    
     db.session.update(record)
     db.session.commit()
     return {

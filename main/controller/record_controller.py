@@ -19,19 +19,18 @@ class RecordList(Resource):
     @api.doc('get all records belonging to a user')
     @api.marshal_list_with(_record, envelope='data')
     def get(self):
-        data, status = Auth.get_logged_in_user(request)
-        token = ''
-        if status == 200:
-            token = data['data']['user_id']
+        
+        user_id = get_token(request)
 
-        return get_all_records(token)
+        return get_all_records(user_id)
 
     @api.doc('creates a record')
     @api.expect(_record, validate=True)
     def post(self):
         data = request.json
+        user_id = get_token(request)
 
-        return create_record(data)
+        return create_record(data, user_id)
     
     @api.doc('update a record')
     @api.expect(_record, validate=True)
@@ -51,4 +50,10 @@ class Record(Resource):
     def delete(self, title):
         return delete_record(title)
     
-    
+
+def get_token(request):
+    data, status = Auth.get_logged_in_user(request)
+    token = ''
+    if status == 200:
+        token = data['data']['user_id']
+    return token
