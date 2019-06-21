@@ -83,9 +83,23 @@ def create_admin(data):
 
 def delete_user(data):
 	user = User.query.filter_by(email=data['email']).first_or_404()
+
+	db.session.delete(user)
+	db.session.commit()
+	return {
+		'status': 'success',
+		'message': 'User successfully deleted'
+	}, 200
 	
 def delete_user_by_id(id):
-	user = User.query.filter_by(public_id=data['id']).first_or_404()
+	user = User.query.filter_by(public_id=id).first_or_404()
+
+	db.session.delete(user)
+	db.session.commit()
+	return {
+		'status': 'success',
+		'message': 'User successfully deleted'
+	}, 200
 
 def update_user(data):
 	user = User.query.filter_by(public_id=data['id']).first_or_404()
@@ -95,7 +109,10 @@ def update_user(data):
 	
 	db.session.update(user)
 	db.session.commit()
-	
+	return {
+		'status': 'success',
+		'message': 'User successfully updated'
+	}, 200
 
 def save_changes(data):
 	db.session.add(data)
