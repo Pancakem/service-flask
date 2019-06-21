@@ -10,12 +10,33 @@ api = RecordDto.api
 _record = RecordDto.record
 
 
-@api.route('/record')
+@api.route('/')
 class RecordList(Resource):
 
     @api.doc('get all records belonging to a user')
+    @api.marshal_list_with(_record, envelope='data')
     def get(self):
 
         data = request.json
-        
-        return
+        return get_all_records(data['user_id'])
+
+    @api.doc('creates a record')
+    def post(self):
+        data = request.json
+
+        return create_record(data)
+    
+    def update(self):
+        pass
+
+@api.route('/<name>')
+class Record(Resource):
+
+    @api.doc('get a user record')  
+    def get(self, name):
+        return get_record(name)
+
+    def delete(self, name):
+        return delete_record(name)
+    
+    
