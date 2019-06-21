@@ -10,7 +10,7 @@ class Auth:
             # fetch the user data
             user = User.query.filter_by(email=data.get("email")).first()
             if user and user.check_password(data.get("password")):
-                auth_token = user.encode_auth_token(user.id)
+                auth_token = user.encode_auth_token(user.public_id)
                 if auth_token:
                     response_object = {
                         "status": "success",
@@ -75,7 +75,7 @@ class Auth:
                 response_object = {
                     "status": "success",
                     "data":{
-                        "user_id": resp, #user.public_id,
+                        "user_id": resp, 
                         "email": user.email,
                         "admin": user.is_admin,
                         "registered_on": str(user.date_registered)
