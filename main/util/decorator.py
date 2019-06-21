@@ -30,7 +30,7 @@ def admin_token_required(f):
             return data, status
 
         admin = token.get('admin')
-        if not admin:
+        if admin == 0:
             response_object = {
                 'status': 'fail',
                 'message': 'admin token required'
