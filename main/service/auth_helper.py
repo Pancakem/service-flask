@@ -69,16 +69,16 @@ class Auth:
         if auth_token:
             resp = User.decode_auth_token(auth_token)
 
-            if not isinstance(resp, str):
-                user = User.query.filter_by(id=resp).first()
+            if isinstance(resp, str):
+                user = User.query.filter_by(public_id=resp).first()
 
                 response_object = {
                     "status": "success",
                     "data":{
-                        "user_id": user.id,
+                        "user_id": resp, #user.public_id,
                         "email": user.email,
-                        "admin": user.admin,
-                        "registered_on": str(user.registered_on)
+                        "admin": user.is_admin,
+                        "registered_on": str(user.date_registered)
                     }
                 }
                 return response_object, 200
@@ -94,3 +94,19 @@ class Auth:
                 "message": "Provide a valid auth token"
             }
             return response_object, 401
+    
+    @staticmethod
+    def user_is_admin(new_request):
+        auth_token = new_request.headers.get("Authorization")
+
+        if auth_token:
+            user_id = User.decode_auth_token(auth_token)
+
+            if isinstance(user_id, str):
+                user = User.query.filter_by(public_id=user_id).first()
+
+                if user.public_id == 2 or user.public_id == 1:
+                    return True
+                
+
+        return False
