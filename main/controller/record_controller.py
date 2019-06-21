@@ -9,13 +9,16 @@ api = RecordDto.api
 
 _record = RecordDto.record
 
+user_id_ = RecordDto.user_id
+
 
 @api.route('/')
 class RecordList(Resource):
 
     @api.doc('get all records belonging to a user')
     @api.marshal_list_with(_record, envelope='data')
-    def get(self):
+    @api.expect(user_id_)
+    def put(self):
 
         data = request.json
         return get_all_records(data['user_id'])
@@ -36,7 +39,8 @@ class RecordList(Resource):
 @api.route('/<title>')
 class Record(Resource):
 
-    @api.doc('get a user record')  
+    @api.doc('get a user record')
+    @api.marshal_with(_record)
     def get(self, title):
         return get_record(title)
 
