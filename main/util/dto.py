@@ -10,6 +10,13 @@ class UserDto:
 		'last_name': fields.String(required=True, description='user last name'),
 		'password': fields.String(required=True, description='user password')
 		})
+	outuser = api.model(
+	'outuser', {
+		'email': fields.String(required=True, description='user email address'),
+		'first_name': fields.String(required=True, description='user first name'),
+		'last_name': fields.String(required=True, description='user last name'),
+		'is_admin': fields.Integer(required=True, description='user priviledge')
+		})
 
 
 class AuthDto:
