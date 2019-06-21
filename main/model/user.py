@@ -31,14 +31,14 @@ class User(db.Model):
         return bcrypt.check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return '<User "{} {}" >'.format(self.first_name, self.last_name)
+        return f'<User {self.first_name} {self.last_name}>'
 
     @validates('email')
     def validate_email(self, key, address):
         assert '@' in address
         return address
 
-    def encode_auth_token(self, user_id):
+    def encode_auth_token(self):
         """
         Generates the Auth Token
         : return: string
@@ -47,15 +47,16 @@ class User(db.Model):
             payload = {
                 "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1, seconds=5),
                 "iat": datetime.datetime.utcnow(),
-                "sub": user_id
+                "sub": self.public_id
             }
             return jwt.encode(
                 payload,
                 key,
                 algorithm="HS256"
-            )
+            ).decode('utf-8')
         except Exception as e:
-            return e
+            print(e)
+            return 
 
     @staticmethod
     def decode_auth_token(auth_token):
