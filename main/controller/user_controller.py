@@ -17,7 +17,10 @@ class UserList(Resource):
 		"""List all registered users"""
 		if Auth.user_is_admin(request.json):
 			return get_all_users()
-		return
+		return {
+			'status': 'fail',
+			'message': 'user not admin'
+		}, 404
 
 
 	@api.response(201, 'User successfully created.')
